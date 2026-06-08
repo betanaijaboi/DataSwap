@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "DataSwap",
+    "slug": "dataswap",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0D47A1"
+    },
+    "newArchEnabled": true,
+    "assetBundlePatterns": ["**/*"],
+    "updates": {
+      "enabled": false
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dataswap.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "DataSwap needs camera access for KYC identity verification.",
+        "NSPhotoLibraryUsageDescription": "DataSwap needs photo library access to upload KYC documents.",
+        "NSFaceIDUsageDescription": "DataSwap uses Face ID for secure login.",
+        "NSLocalNetworkUsageDescription": "DataSwap uses the local network for connectivity."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0D47A1"
+      },
+      "package": "com.dataswap.app",
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-local-authentication",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "DataSwap needs camera access for KYC identity verification."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "DataSwap needs photo library access to upload KYC documents."
+        }
+      ]
+    ]
+  }
+}
