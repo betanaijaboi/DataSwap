@@ -11,6 +11,7 @@
 - [Prerequisites](#prerequisites)
 - [Getting Started (Fresh PC)](#getting-started-fresh-pc)
 - [Running the App](#running-the-app)
+- [Tests](#tests)
 - [Demo Account](#demo-account)
 - [Project Structure](#project-structure)
 - [Documentation](#documentation)
@@ -163,6 +164,24 @@ React Native web support is partial — navigation and native features won't wor
 ```bash
 npm run web
 ```
+
+---
+
+## Tests
+
+Unit tests use [Vitest](https://vitest.dev) and run in Node, with no emulator needed:
+
+```bash
+npm test
+```
+
+| Suite | Covers |
+|---|---|
+| `__tests__/validators.test.js` | Nigerian phone numbers, email, password strength rules, BVN/NIN/NUBAN/PIN formats, amount limits, names, KYC age (18–100, birthday-aware) |
+| `__tests__/formatters.test.js` | Naira formatting, +234 normalisation, masking, data sizes, initials, transaction labels |
+| `__tests__/walletService.test.js` | Wallet balance and pagination, funding and withdrawals, airtime and data purchases, selling data into the resale inventory and buying it back, and rejection of invalid or negative amounts |
+
+CI runs the suite on every push and pull request (`.github/workflows/test.yml`).
 
 ---
 

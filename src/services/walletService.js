@@ -1,6 +1,9 @@
 import { DATA_PLANS, SELL_RATE, TRANSACTION_TYPES } from '../utils/constants';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const isPositiveAmount = (n) => typeof n === 'number' && Number.isFinite(n) && n > 0;
+const INVALID_AMOUNT = { success: false, error: 'Enter a valid amount.' };
+
 const genTxId = () => `tx_${Math.random().toString(36).slice(2)}${Date.now()}`;
 
 // In-memory store simulating a backend
@@ -112,6 +115,7 @@ export const walletService = {
 
   fundWallet: async (token, amount, paymentMethod) => {
     await delay(2000); // simulate payment gateway
+    if (!isPositiveAmount(amount)) return INVALID_AMOUNT;
     ensureWallet(token);
     const current = wallets.get(token);
     wallets.set(token, current + amount);
@@ -127,6 +131,7 @@ export const walletService = {
 
   withdraw: async (token, amount, bankDetails) => {
     await delay(1500);
+    if (!isPositiveAmount(amount)) return INVALID_AMOUNT;
     ensureWallet(token);
     const current = wallets.get(token);
     if (current < amount) {
@@ -193,6 +198,7 @@ export const walletService = {
 
   buyAirtime: async (token, network, amount, phoneNumber) => {
     await delay(1200);
+    if (!isPositiveAmount(amount)) return INVALID_AMOUNT;
     ensureWallet(token);
 
     const current = wallets.get(token);
@@ -218,6 +224,9 @@ export const walletService = {
 
   sellData: async (token, network, planId, quantity = 1) => {
     await delay(1500);
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return { success: false, error: 'Quantity must be at least 1.' };
+    }
     ensureWallet(token);
 
     const networkPlans = DATA_PLANS[network];
