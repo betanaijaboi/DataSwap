@@ -50,11 +50,17 @@ export const validateName = (name) => {
   return name.trim().length >= 2 && /^[a-zA-Z\s'-]+$/.test(name.trim());
 };
 
-export const validateDateOfBirth = (dob) => {
+// Age in completed years: someone born later in the year than today hasn't
+// had this year's birthday yet, so they're a year younger than the year gap.
+export const validateDateOfBirth = (dob, now = new Date()) => {
   const date = new Date(dob);
-  const now = new Date();
+  if (isNaN(date.getTime())) return false;
   const minAge = 18;
   const maxAge = 100;
-  const age = now.getFullYear() - date.getFullYear();
+  let age = now.getFullYear() - date.getFullYear();
+  const hadBirthdayThisYear =
+    now.getMonth() > date.getMonth() ||
+    (now.getMonth() === date.getMonth() && now.getDate() >= date.getDate());
+  if (!hadBirthdayThisYear) age -= 1;
   return age >= minAge && age <= maxAge;
 };
